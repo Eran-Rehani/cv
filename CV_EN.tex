@@ -1,0 +1,179 @@
+% =============================================================================
+%  Eran Rehani — Curriculum Vitae (public version: no phone, no location)
+%  Compile with: xelatex CV.tex
+%
+%  NOTE ON FONTS: do NOT use "Open Sans" — it is installed here only as a
+%  variable font (OpenSans[wdth,wght].ttf), which xdvipdfmx cannot embed; it
+%  fails with "Invalid font: -1 (0)" and writes no PDF at all.
+%  Do not use Lato either: its cmap exports "-" as U+2010, so pdftotext (and
+%  therefore any ATS) never matches hyphenated fields. TeX Gyre Heros exports
+%  ASCII and ships with all of TeX Live.
+% =============================================================================
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Heros}
+
+\usepackage{xifthen,pgffor}
+
+\usepackage[a4paper]{geometry}
+\geometry{top=0.9cm, bottom=0.8cm, left=1.45cm, right=1.45cm}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+\usepackage{array,xcolor,hyperref}
+
+\definecolor{accent}{RGB}{0,51,102}
+\definecolor{muted}{RGB}{110,110,110}
+\definecolor{linkcol}{RGB}{31,95,160}
+\definecolor{rulecol}{RGB}{205,205,205}
+\definecolor{todocol}{RGB}{200,0,0}
+
+\hypersetup{colorlinks=true, urlcolor=linkcol, linkcolor=linkcol,
+            pdfborder={0 0 0},
+            pdftitle={Eran Rehani — Curriculum Vitae},
+            pdfauthor={Eran Rehani}}
+
+% Loud placeholder — renders in red so a draft can never ship silently.
+\newcommand{\todo}[1]{\textcolor{todocol}{\textbf{[TODO: #1]}}}
+
+% Section heading: uppercase, accent, hairline rule beneath.
+% Asymmetric spacing: generous above, tight below, so each heading binds to
+% the block it introduces instead of floating between two.
+\newcommand{\cvsection}[1]{%
+  \vspace{4pt}%
+  {\normalsize\bfseries\color{accent}%
+   \addfontfeature{LetterSpace=12}\MakeUppercase{#1}}\\[2pt]%
+  \textcolor{rulecol}{\hrule}%
+  \vspace{3pt}%
+}
+
+% {date}{title}{org}{comma-separated bullet list — {} for none}
+% Date is pushed flush right into its own optical column — chronology is the
+% first thing a reader scans, and it cannot be scanned at the end of a run-on line.
+\newcommand{\cventry}[4]{%
+  {\textcolor{accent}{\textbf{\small #2}}%
+   \ifthenelse{\equal{#3}{}}{}{{\color{muted}\small\;\textperiodcentered\;#3}}%
+   \ifthenelse{\equal{#1}{}}{}{\hfill{\color{muted}\small #1}}}\\[-1pt]%
+  \ifthenelse{\equal{#4}{}}{}{\foreach \d in {#4}{{\small\d}\\[-1pt]}}%
+  \vspace{2.5pt}%
+}
+
+\begin{document}
+
+% ── HEADER ───────────────────────────────────────────────────────────────────
+\begin{center}
+{\LARGE\textbf{Eran Rehani}}\\[3pt]
+{\small\textsc{Physics Student $\cdot$ Hebrew University of Jerusalem}}\\[5pt]
+{\small
+  \href{mailto:eran.rehani@mail.huji.ac.il}{eran.rehani@mail.huji.ac.il}\quad$\cdot$\quad
+  \href{https://github.com/Eran-Rehani}{github.com/Eran-Rehani}%
+}
+\end{center}
+\vspace{4pt}
+\textcolor{rulecol}{\hrule}
+\vspace{5pt}
+
+% ── ABOUT ────────────────────────────────────────────────────────────────────
+{\small Third-year Extended Single-Major B.Sc.\ Physics student at the Hebrew University of
+Jerusalem, working in computational physics and scientific programming. I write simulations
+from first principles (Monte Carlo, molecular dynamics, numerical quantum mechanics), analyse
+the output in Python, and report the results in \LaTeX{}.}
+
+% ── EDUCATION ────────────────────────────────────────────────────────────────
+\cvsection{Education}
+
+\cventry{2023--}{B.Sc.\ Physics, Extended Single Major}{Hebrew University of Jerusalem}%
+  {{Completed Year 3. Coursework listed below; LaTeX summaries of the Year 3 courses are
+    published at \href{https://github.com/Eran-Rehani/lecture-notes-huji}{lecture-notes-huji}.}}
+
+% ── EXPERIENCE ───────────────────────────────────────────────────────────────
+\cvsection{Experience}
+
+\cventry{2021--present}{Personal Trainer}{Certified, Wingate Institute}%
+  {{Certified Personal Trainer, Wingate Institute. Built training programmes, tracked client
+    progress, and managed my own client book, first at a gym and then independently.},%
+   {Still training one shift a week alongside full-time studies.}}
+
+% ── MILITARY SERVICE ─────────────────────────────────────────────────────────
+\cvsection{Military Service}
+
+\cventry{12/2018--5/2021}{Intelligence Corps, IDF}{Cyber \& Information Security}%
+  {{Worked in Linux and networking environments; wrote Python and Bash tooling to automate
+    recurring analysis. Owned a technical domain end to end and trained incoming personnel on it.},%
+   {Handled live security incidents on an on-call rotation, under time pressure and with sensitive data.}}
+
+\cventry{7/2018--12/2018}{IAF Pilot Course, Selected Candidate}{Ben-Gurion University}%
+  {{Passed national Israeli Air Force screening and entered the pilot course; completed
+    the academic coursework Ben-Gurion University delivers to the cohort.}}
+
+% ── TECHNICAL SKILLS ─────────────────────────────────────────────────────────
+\cvsection{Technical Skills}
+
+{\small\begin{tabular}{@{}p{2.4cm}p{14.0cm}@{}}
+\textbf{Programming} & Python, MATLAB, \LaTeX{} \\[1.5pt]
+\textbf{Libraries}   & NumPy, SciPy, Matplotlib, Numba (JIT), OpenCV, multiprocessing \\[1.5pt]
+\textbf{Tools}       & Git, Linux, Jupyter, VS Code, AI-assisted development workflows \\[1.5pt]
+\textbf{Languages}   & Hebrew (native), English (high level, university exemption); writes technical reports in English \\
+\end{tabular}}
+
+% ── COURSEWORK ───────────────────────────────────────────────────────────────
+\cvsection{Relevant Coursework}
+
+{\small\textbf{Physics:} Mechanics \& Special Relativity, Electromagnetism, Analytical
+Electrodynamics, Analytical Mechanics, Waves \& Optics, Thermal Physics, Statistical Physics,
+Quantum Mechanics 1--2, Approximation Methods, Nuclear Physics, Particle Physics, Continuum
+Mechanics, Labs A--B.\quad
+\textbf{Mathematics:} Linear Algebra, Calculus, Probability, Complex Functions, Equations of
+Mathematical Physics.\quad
+\textbf{Computational:} Computational Physics (Python), MATLAB.}
+
+% ── PROJECTS ─────────────────────────────────────────────────────────────────
+\cvsection{Projects \& Lab Work}
+
+\cventry{2024}{%
+  \href{https://github.com/Eran-Rehani/Chaos-and-Nonlinear-Dynamics}{Chaos \& Nonlinear Dynamics}%
+}{Python $\cdot$ NumPy $\cdot$ Matplotlib}{%
+  {Mapped chaos in a dripping faucet (bifurcation diagrams, return maps, surface tension) and
+   in an RLD circuit (I--V curve, diode capacitance, onset of chaos), then measured the
+   Feigenbaum constant from the bifurcation diagram.\;
+   \href{https://github.com/Eran-Rehani/Lab-Reports/blob/master/drops.pdf}{[drip report]}\;
+   \href{https://github.com/Eran-Rehani/Lab-Reports/blob/master/RLD_circuit.pdf}{[RLD report]}}%
+}
+
+\cventry{2024}{%
+  \href{https://github.com/Eran-Rehani/2D-Ising-Model-Monte-Carlo}{Monte Carlo \& Molecular Dynamics Simulations}%
+}{Python $\cdot$ Numba $\cdot$ multiprocessing}{%
+  {2D Ising model with heat-bath (Glauber) dynamics and Numba JIT. Recovered the Onsager
+   critical temperature $T_c$ and the exponents $\beta,\gamma,\nu$ by finite-size scaling.},%
+  {\href{https://github.com/Eran-Rehani/Hard-Disk-Gas-Molecular-Dynamics}{Hard-Disk Gas MD}:
+   exact event-driven molecular dynamics. Verified the Maxwell--Boltzmann distribution and
+   the radial distribution function $g(r)$.}%
+}
+
+\cventry{2024}{%
+  \href{https://github.com/Eran-Rehani/Numerical-Schrodinger-Solver}{Numerical Schr\"odinger Solver}%
+}{Python $\cdot$ NumPy $\cdot$ SciPy}{%
+  {Solved the radial Schr\"odinger equation with finite differences and the Numerov method
+   ($O(h^4)$), checked convergence against the analytic hydrogen spectrum, added Coulomb
+   corrections, and built a self-consistent-field solver for multi-electron atoms.}%
+}
+
+\cventry{2026}{%
+  \href{https://github.com/Eran-Rehani/Computational-Physics-77315}{Computational Physics (77315)}%
+}{Python $\cdot$ Jupyter}{%
+  {Floating-point stability, interpolation, numerical integration and root-finding,
+   applied to the structure of white dwarf stars.}%
+}
+
+{\footnotesize\textbf{Additional:}\;
+  \href{https://github.com/Eran-Rehani/Einstein-Solid-Monte-Carlo}{Einstein Solid MC} $\cdot$
+  \href{https://github.com/Eran-Rehani/Brownian-Motion-Particle-Tracking}{Brownian Motion Tracking} $\cdot$
+  \href{https://github.com/Eran-Rehani/Photoelasticity-Polarization-Lab}{Photoelasticity} $\cdot$
+  \href{https://github.com/Eran-Rehani/RLC-solution-using-Fourier-transform}{RLC Frequency Response} $\cdot$
+  \href{https://github.com/Eran-Rehani/capacitor-laplace-solver}{Laplace Solver}%
+}
+
+\end{document}
